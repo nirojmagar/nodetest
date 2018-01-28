@@ -1,3 +1,4 @@
+const JWT = require('jsonwebtoken');
 const User = require('../models/user');
 
 module.exports = {
@@ -25,12 +26,20 @@ module.exports = {
 		const newUser = new User({ email, password });
 		await newUser.save();
 
-		// respond with tocken
-		res.json({ user: 'created' });
+		// respond with token
+		const token = JWT.sign({
+			iss: 'can be name or name of out server or app',
+			sub: newUser.id,
+			iat: new Date().getTime(),// current time
+			exp: new Date().setDate(new Date().getDate()+1) //current time + 1 day ahead
+		}, 'apiauthentication secret');
+
+
+		res.status(200).json({ token }); 
 	},
 
 	signIn: async (req, res, next) => {
-		// Generate tocken
+		// Generate token
 		console.log('UserController.signIn() called');	
 	},
 
