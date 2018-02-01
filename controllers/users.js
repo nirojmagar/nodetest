@@ -13,6 +13,7 @@ signToken = user => {
 
 module.exports = {
 	signUp: async (req, res, next) => {
+		console.log('UserController.signUp() called');
 		// const email = req.value.body.email;
 		// const password = req.value.body.password;
 		const { email, password } = req.value.body;
@@ -53,11 +54,15 @@ module.exports = {
 
 	signIn: async (req, res, next) => {
 		// Generate token
+		console.log('req.user', req.user);
+		const token = signToken(req.user);
 		console.log('UserController.signIn() called');	
+		res.status(200).json({ token });
 	},
 
 	secret: async (req, res, next) => {
-		//
+		// Protected area need to login 
 		console.log('UserController.secret() called');
+		res.json({ secret: "Resource" });
 	}
 }
