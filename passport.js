@@ -11,10 +11,9 @@ passport.use(new JWTStrategy({
 	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 	secretOrKey: JWT_SECRET
 }, async (payload, done) => {
-	console.log('JSON WEB TOKENS STRATEGY');
 	try{
 		//  Find the user apecified in token
-		const user = await User.FindById(payload.sub);
+		const user = await User.findById(payload.sub);
 
 
 		// If user doesn't exists, handle it 
@@ -35,7 +34,6 @@ passport.use(new JWTStrategy({
 passport.use( new localStrategy({
 	usernameField: 'email'
 }, async (email, password, done) => {
-	console.log('LOCAL STRATEGY');
 	try {
 		// Find user with given email
 		const foundUser = await User.findOne({ email });
@@ -56,7 +54,6 @@ passport.use( new localStrategy({
 		// Otherwise, return the user
 		done(null, foundUser);
 	} catch( error ) {
-		console.log('error occured');
 		done(error);
 	}
 }));

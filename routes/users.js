@@ -17,4 +17,10 @@ router.route('/signIn')
 router.route('/secret')
 .get(passport.authenticate('jwt', { session: false}), UsersController.secret);
 
+router.route('/profile')
+.get(passport.authenticate('jwt', { session: false}), UsersController.profile);
+
+router.route('/profile')
+.post(passport.authenticate('jwt', { session: false}), UsersController.update);
+
 module.exports = router;
